@@ -172,12 +172,13 @@ class ModelSummary(object):
         self._model = model
         self._mode = mode
         self._layer_summary = self.summarize()
+        print(self)
 
     @property
     def named_modules(self) -> List[Tuple[str, nn.Module]]:
         if self._mode == ModelSummary.MODE_FULL:
             mods = self._model.named_modules()
-            mods = list(mods)[1:]  # do not include root module (LightningModule)
+            mods = list(mods)[3:-1]  # do not include root module (LightningModule)
         elif self._mode == ModelSummary.MODE_TOP:
             # the children are the top-level modules
             mods = self._model.named_children()
